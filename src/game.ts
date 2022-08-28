@@ -1,50 +1,36 @@
-import { DEFAULT_CONFIG } from './config'
+import { WINDOW } from './config'
+import { BasePlayer, Enemy, MainPlayer } from './components'
 
-const canvas = window.document.getElementById("main-canvas") as HTMLCanvasElement
-canvas.width = innerWidth
-canvas.height = innerHeight
-
-class Player {
-    ctx: CanvasRenderingContext2D
-    x: number
-    y: number
-    radius: number
-    color: string
-
-    constructor(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) {
-        this.ctx = ctx
-        this.x = x
-        this.y = y
-        this.radius = radius
-        this.color = color
-    }
-
-    draw() {
-        this.ctx.beginPath()
-        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-        this.ctx.fillStyle = this.color
-        this.ctx.fill()
-
-        console.log("DEFAULT CONFIG", DEFAULT_CONFIG)
-    }
-}
-
-class Game {
+export class Game {
     private ctx: CanvasRenderingContext2D
+
+    private player: MainPlayer
+
+    private enemies: Enemy[]
 
     constructor(ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
+        this.player = new MainPlayer(this.ctx, WINDOW.width / 2, WINDOW.height / 2, 40, 'blue')
+        this.enemies = [new Enemy(this.ctx, WINDOW.width / 2, WINDOW.height / 2, 40, 'red')]
     }
 
     start() {
-        const newPlayer = new Player(this.ctx, 100, 100, 150, 'blue')
-        newPlayer.draw()
+        const animation = () => {
+            requestAnimationFrame(animation)
+            this.draw()
+        }
+        animation()
     }
-}
 
-const ctx = canvas.getContext('2d')
-if (ctx) {
-    (new Game(ctx)).start()
+    draw() {
+        this.ctx.clearRect(0, 0, WINDOW.width, WINDOW.height)
+        this.player.draw()
+
+        // this.enemies.forEach(item => {
+        //     item.draw()
+        //     item.update()
+        // })
+    }
 }
 
 

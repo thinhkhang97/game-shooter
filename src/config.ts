@@ -1,1 +1,4 @@
-export const DEFAULT_CONFIG = 'DEFAULT _CONFIG'
+export const WINDOW = {
+    width: innerWidth,
+    height: innerHeight
+}
