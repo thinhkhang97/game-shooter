@@ -1,0 +1,1 @@
+export const DEFAULT_CONFIG = 'DEFAULT _CONFIG'
