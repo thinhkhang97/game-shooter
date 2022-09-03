@@ -1,9 +1,8 @@
 import { WINDOW } from "@app/config";
 import { Game } from "@app/game";
-import { ClassicPlayerGun, ClassicShooterPlayer, IEnemy, IProjectTile, IShooterPlayer } from "./components";
-import { ClassicEnemyFactory, IEnemyFactory } from "./components/enemy-factory";
-import _ from 'lodash'
 import { getDistance } from "@app/utils";
+import { ClassicPlayerGun, ClassicShooterPlayer, IShooterPlayer } from "./components";
+import { ClassicEnemyFactory, IEnemyFactory } from "./components/enemy-factory";
 
 export class Shooter extends Game {
     private requestAnimationId?: number
@@ -58,6 +57,25 @@ export class Shooter extends Game {
         })
     }
 
+    handleOutOfScreen() {
+        const enemies = this.enemyFactory.getEnemy()
+        const projectTile = this.mainPlayer.getPlayerProjectTile()
+
+        enemies.forEach((item, index) => {
+            const enemyPos = item.getPosition()
+            if (enemyPos.x > WINDOW.width || enemyPos.x < 0 || enemyPos.y < 0 || enemyPos.y > WINDOW.height) {
+                enemies.splice(index, 1)
+            }
+        })
+
+        projectTile.forEach((item, index) => {
+            const tilePos = item.getPosition()
+            if (tilePos.x > WINDOW.width || tilePos.x < 0 || tilePos.y < 0 || tilePos.y > WINDOW.height) {
+                projectTile.splice(index, 1)
+            }
+        })
+    }
+
     start(): void {
         const animation = () => {
             this.requestAnimationId = requestAnimationFrame(animation)
@@ -66,6 +84,7 @@ export class Shooter extends Game {
             this.mainPlayer.getPlayerProjectTile().forEach(item => item.draw())
             this.enemyFactory.getEnemy().forEach(item => item.draw())
             this.handleCollision()
+            this.handleOutOfScreen()
         }
         animation()
     }
