@@ -1,16 +1,26 @@
+import type { Position } from "@app/type"
+
 export interface IBaseComponent {
     draw: () => void
     update?: () => void
+    getPosition: () => Position
 }
 
-export class BaseComponent {
-    x: number
-    y: number
-    ctx: CanvasRenderingContext2D
+export class BaseComponent implements IBaseComponent {
+    protected position: Position
 
-    constructor(ctx: CanvasRenderingContext2D, x: number, y: number) {
-        this.ctx = ctx,
-            this.x = x
-        this.y = y
+    protected ctx: CanvasRenderingContext2D
+
+    constructor(ctx: CanvasRenderingContext2D, position: Position) {
+        this.ctx = ctx
+        this.position = position
+    }
+
+    getPosition() {
+        return this.position
+    }
+
+    draw() {
+        throw Error('No component implementation')
     }
 }
