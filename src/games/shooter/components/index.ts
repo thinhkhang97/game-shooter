@@ -1,3 +1,5 @@
 export * from './project-tile'
 export * from './shooter-player'
 export * from './player-gun'
+export * from './enemy'
+export * from './enemy-factory'

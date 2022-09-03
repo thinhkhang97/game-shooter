@@ -1,7 +1,7 @@
 # Shooter requirement
--[] There is a player in the center of game
+-[x] There is a player in the center of game
 
--[] Player can shoot everywhere
+-[x] Player can shoot everywhere
 
 -[] The enemies are spawn in screen border and move to the player position
 
