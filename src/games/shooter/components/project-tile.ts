@@ -4,6 +4,8 @@ import type { Position, Velocity } from "@app/type";
 
 export interface IProjectTile extends IBaseComponent {
     getVelocity: () => Velocity
+
+    getSize: () => number
 }
 
 export class ClassicProjectTile extends BaseComponent implements IProjectTile {
@@ -22,6 +24,10 @@ export class ClassicProjectTile extends BaseComponent implements IProjectTile {
 
     getVelocity() {
         return this.velocity
+    }
+
+    getSize() {
+        return this.size
     }
 
     draw() {

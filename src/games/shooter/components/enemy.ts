@@ -1,14 +1,18 @@
-import { BaseComponent } from "@app/components"
+import { BaseComponent, IBaseComponent } from "@app/components"
 import { WINDOW } from "@app/config"
 import type { Position } from "@app/type"
 import { getRandomColor } from "@app/utils"
 
-export interface IEnemy {
+export interface IEnemy extends IBaseComponent {
     draw: () => void
 
     getVelocity: () => Position
 
     setVelocity: (v: Position) => void
+
+    getRadius: () => number
+
+    setRadius: (value: number) => void
 }
 
 const MIN_RADIUS = 16
@@ -16,9 +20,9 @@ const MIN_RADIUS = 16
 const MAX_RADIUS = 80
 
 
-const BORDER_PADDING = 160
-const BORDER_START_X = WINDOW.width / 2 - BORDER_PADDING
-const BORDER_END_X = WINDOW.width / 2 + BORDER_PADDING
+const BORDER_PADDING = 240
+const BORDER_START_X = WINDOW.width / 2 - BORDER_PADDING * 2
+const BORDER_END_X = WINDOW.width / 2 + BORDER_PADDING * 2
 const BORDER_START_Y = WINDOW.height / 2 - BORDER_PADDING
 const BORDER_END_Y = WINDOW.height / 2 + BORDER_PADDING
 
@@ -44,6 +48,14 @@ export class ClassicEnemy extends BaseComponent implements IEnemy {
 
     getVelocity() {
         return this.velocity
+    }
+
+    getRadius() {
+        return this.radius
+    }
+
+    setRadius(value: number) {
+        this.radius = value
     }
 
     setVelocity(value: Position) {
