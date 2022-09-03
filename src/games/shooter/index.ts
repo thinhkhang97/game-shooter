@@ -1,6 +1,7 @@
 import { WINDOW } from "@app/config";
 import { Game } from "@app/game";
 import { getDistance } from "@app/utils";
+import gsap from "gsap";
 import { ClassicPlayerGun, ClassicShooterPlayer, IShooterPlayer } from "./components";
 import { ClassicEnemyFactory, IEnemyFactory } from "./components/enemy-factory";
 
@@ -22,7 +23,7 @@ export class Shooter extends Game {
     }
 
     initGame() {
-        this.ctx.canvas.style.backgroundColor = "black"
+        this.ctx.canvas.style.backgroundColor = "rgba(0,0,0,0.9)"
         this.enemyFactory.spawnEnemy()
     }
 
@@ -38,7 +39,8 @@ export class Shooter extends Game {
                 const distance = getDistance(enemyPos, tilePos)
 
                 if (distance < enemy.getRadius() + tile.getSize()) {
-                    enemy.setRadius(enemy.getRadius() - 30)
+                    gsap.to(enemy, { radius: enemy.getRadius() - 30, ease: "bounce.out" })
+                    // enemy.setRadius()
                     projectTile.splice(tileIndex, 1)
                 }
             })
@@ -79,7 +81,9 @@ export class Shooter extends Game {
     start(): void {
         const animation = () => {
             this.requestAnimationId = requestAnimationFrame(animation)
-            this.ctx.clearRect(0, 0, WINDOW.width, WINDOW.height)
+            this.ctx.fillStyle = "rgba(0, 0, 0 , 0.3)"
+            this.ctx.fillRect(0, 0, WINDOW.width, WINDOW.height)
+
             this.mainPlayer.draw()
             this.mainPlayer.getPlayerProjectTile().forEach(item => item.draw())
             this.enemyFactory.getEnemy().forEach(item => item.draw())

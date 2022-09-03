@@ -2,6 +2,7 @@ import { BaseComponent, IBaseComponent } from "@app/components"
 import { WINDOW } from "@app/config"
 import type { Position } from "@app/type"
 import { getRandomColor } from "@app/utils"
+import gsap from "gsap"
 
 export interface IEnemy extends IBaseComponent {
     draw: () => void

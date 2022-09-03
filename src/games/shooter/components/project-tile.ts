@@ -13,7 +13,7 @@ export class ClassicProjectTile extends BaseComponent implements IProjectTile {
 
     private color: string = 'white'
 
-    private size: number = 16
+    private size: number = 8
 
     private speed: number = 15
 

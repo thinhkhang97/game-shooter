@@ -13,7 +13,7 @@ export interface IShooterPlayer extends IBaseComponent {
 
 export class ClassicShooterPlayer extends BaseComponent implements IShooterPlayer {
 
-    private radius = 64
+    private radius = 32
 
     private color = 'white'
 
