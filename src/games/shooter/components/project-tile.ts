@@ -6,6 +6,8 @@ export interface IProjectTile extends IBaseComponent {
     getVelocity: () => Velocity
 
     getSize: () => number
+
+    getPower: () => number
 }
 
 export class ClassicProjectTile extends BaseComponent implements IProjectTile {
@@ -16,6 +18,8 @@ export class ClassicProjectTile extends BaseComponent implements IProjectTile {
     private size: number = 8
 
     private speed: number = 15
+
+    private power: number = 8
 
     constructor(ctx: CanvasRenderingContext2D, position: Position, velocity: Velocity) {
         super(ctx, { ...position })
@@ -28,6 +32,10 @@ export class ClassicProjectTile extends BaseComponent implements IProjectTile {
 
     getSize() {
         return this.size
+    }
+
+    getPower() {
+        return this.power
     }
 
     draw() {

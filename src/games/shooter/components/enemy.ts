@@ -2,7 +2,6 @@ import { BaseComponent, IBaseComponent } from "@app/components"
 import { WINDOW } from "@app/config"
 import type { Position } from "@app/type"
 import { getRandomColor } from "@app/utils"
-import gsap from "gsap"
 
 export interface IEnemy extends IBaseComponent {
     draw: () => void
@@ -12,6 +11,8 @@ export interface IEnemy extends IBaseComponent {
     setVelocity: (v: Position) => void
 
     getRadius: () => number
+
+    getColor: () => string
 
     setRadius: (value: number) => void
 }
@@ -34,6 +35,8 @@ export class ClassicEnemy extends BaseComponent implements IEnemy {
 
     private velocity = { x: 0, y: 0 }
 
+    private speed = 0.5
+
     constructor(ctx: CanvasRenderingContext2D) {
         let randomX = Math.random() * WINDOW.width
         let randomY = Math.random() * WINDOW.height
@@ -49,6 +52,10 @@ export class ClassicEnemy extends BaseComponent implements IEnemy {
 
     getVelocity() {
         return this.velocity
+    }
+
+    getColor() {
+        return this.color
     }
 
     getRadius() {
@@ -69,7 +76,7 @@ export class ClassicEnemy extends BaseComponent implements IEnemy {
         this.ctx.fillStyle = this.color
         this.ctx.fill()
 
-        this.position.x += this.velocity.x
-        this.position.y += this.velocity.y
+        this.position.x += this.velocity.x * this.speed
+        this.position.y += this.velocity.y * this.speed
     }
 }

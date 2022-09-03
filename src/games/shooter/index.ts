@@ -2,7 +2,7 @@ import { WINDOW } from "@app/config";
 import { Game } from "@app/game";
 import { getDistance } from "@app/utils";
 import gsap from "gsap";
-import { ClassicPlayerGun, ClassicShooterPlayer, IShooterPlayer } from "./components";
+import { ClassicParticle, ClassicPlayerGun, ClassicShooterPlayer, IParticle, IShooterPlayer } from "./components";
 import { ClassicEnemyFactory, IEnemyFactory } from "./components/enemy-factory";
 
 export class Shooter extends Game {
@@ -11,6 +11,8 @@ export class Shooter extends Game {
     private mainPlayer: IShooterPlayer
 
     private enemyFactory: IEnemyFactory
+
+    private particles: IParticle[] = []
 
     constructor(ctx: CanvasRenderingContext2D) {
         super(ctx)
@@ -38,9 +40,15 @@ export class Shooter extends Game {
                 const tilePos = tile.getPosition()
                 const distance = getDistance(enemyPos, tilePos)
 
+                // Project tile hits an enemy
                 if (distance < enemy.getRadius() + tile.getSize()) {
-                    gsap.to(enemy, { radius: enemy.getRadius() - 30, ease: "bounce.out" })
-                    // enemy.setRadius()
+                    gsap.to(enemy, { radius: enemy.getRadius() - tile.getPower(), ease: "bounce.out" })
+                    for (let i = 0; i < 8; i++) {
+                        this.particles.push(new ClassicParticle(this.ctx, tile.getPosition(), enemy.getColor(), {
+                            x: (Math.random() - 0.5) * (Math.random() * 16),
+                            y: (Math.random() - 0.5) * (Math.random() * 16),
+                        }))
+                    }
                     projectTile.splice(tileIndex, 1)
                 }
             })
@@ -76,6 +84,12 @@ export class Shooter extends Game {
                 projectTile.splice(index, 1)
             }
         })
+
+        this.particles.forEach((item, index) => {
+            if (item.getAlpha() <= 0.01 || item.getRadius() < 0) {
+                this.particles.splice(index, 1)
+            }
+        })
     }
 
     start(): void {
@@ -87,6 +101,7 @@ export class Shooter extends Game {
             this.mainPlayer.draw()
             this.mainPlayer.getPlayerProjectTile().forEach(item => item.draw())
             this.enemyFactory.getEnemy().forEach(item => item.draw())
+            this.particles.forEach(item => item.draw())
             this.handleCollision()
             this.handleOutOfScreen()
         }
