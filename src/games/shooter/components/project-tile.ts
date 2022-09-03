@@ -9,11 +9,11 @@ export interface IProjectTile extends IBaseComponent {
 export class ClassicProjectTile extends BaseComponent implements IProjectTile {
     private velocity: Velocity
 
-    private color: string = 'blue'
+    private color: string = 'white'
 
-    private size: number = 24
+    private size: number = 16
 
-    private speed: number = 10
+    private speed: number = 15
 
     constructor(ctx: CanvasRenderingContext2D, position: Position, velocity: Velocity) {
         super(ctx, { ...position })

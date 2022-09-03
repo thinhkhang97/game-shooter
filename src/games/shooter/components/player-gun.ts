@@ -18,7 +18,7 @@ export class ClassicPlayerGun extends BaseComponent implements IPlayerGun {
 
     initProjectTile() {
         addEventListener('click', (event) => {
-            const angle = Math.atan2(event.clientY - this.position.y, event.clientX - this.position.y)
+            const angle = Math.atan2(event.clientY - this.position.y, event.clientX - this.position.x)
             const velocityX = Math.cos(angle)
             const velocityY = Math.sin(angle)
             this.projectTiles.push(new ClassicProjectTile(this.ctx, this.position, { x: velocityX, y: velocityY }))

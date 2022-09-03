@@ -15,7 +15,7 @@ export class ClassicShooterPlayer extends BaseComponent implements IShooterPlaye
 
     private radius = 64
 
-    private color = 'blue'
+    private color = 'white'
 
     private playerGun: IPlayerGun
 
